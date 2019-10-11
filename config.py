@@ -1,0 +1,5 @@
+FILE_SRC = "src"
+FILE_DST = "dst"
+CONFLUENCE_DOMAIN = "example.com"
+CONFLUENCE_LOGIN = "air"
+CONFLUENCE_PASS = "reality"
