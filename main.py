@@ -11,7 +11,7 @@ from config import (CONFLUENCE_DOMAIN, CONFLUENCE_LOGIN, CONFLUENCE_PASS,
 
 def is_string_url(string):
     print(string)
-    pattern = re.compile(r"https://docs[a-zA-Z0-9\/\.-]+")
+    pattern = re.compile(r"https://docs[a-zA-Z0-9\/\.-]+(#.*)?")
 
     if pattern.fullmatch(string):
         return True
@@ -27,6 +27,14 @@ def is_url_alive(url):
 
     if out == "200":
         return True
+
+    return False
+
+
+def get_url_anchor(url):
+    anchor = url.find('#')
+    if anchor != -1:
+        return url[anchor:]
 
     return False
 
@@ -79,7 +87,10 @@ def main():
                     file_dst.write('')
                 else:
                     page_id = get_page_id(line)
+                    url_anchor = get_url_anchor(line)
                     short_url = get_short_url(session, page_id)
+                    if url_anchor:
+                        short_url += url_anchor
                     file_dst.write(short_url)
                 file_dst.write('\n')
 
